@@ -57,7 +57,7 @@ export class CreatePatientDto {
   @IsDate()
   dob: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  organisation_id: number;
+  // @IsNumber()
+  // @IsNotEmpty()
+  // organisation_id: number;
 }

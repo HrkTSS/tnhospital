@@ -12,6 +12,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -45,10 +46,9 @@ export class Patient {
   @Column()
   dob: string;
 
-  @Column()
-  organisation_id: number;
+  // @Column()
+  // organisation_id: number;
 
-  @OneToMany(() => Organisation, organisation => organisation.patient)
-  organisation: Organisation[];
+  @ManyToOne(() => Organisation, (organisation) => organisation.patient)
+  organisations: Organisation;
 }
-

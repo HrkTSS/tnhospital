@@ -1,12 +1,8 @@
-import { type } from 'os';
+import { Doctor } from 'src/doctor/entities/doctor.entity';
+import { Hospital } from 'src/hospital/entities/hospital.entity';
 import { Patient } from 'src/patient/entities/patient.entity';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Roles } from 'src/roles/roles.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('organisation')
 export class Organisation {
@@ -16,6 +12,15 @@ export class Organisation {
   @Column()
   name: string;
 
-  @ManyToOne(() => Patient, patient => patient.organisation)
-  patient: Patient;
+  @OneToMany(() => Patient, (patient) => patient.organisations)
+  patient: Patient[];
+
+  @OneToMany(() => Hospital, (hospital) => hospital)
+  hospitals: Hospital[];
+
+  @OneToMany(() => Doctor, (doctor) => doctor.organisation)
+  doctors: Doctor[];
+
+  @OneToMany(() => Roles, (roles) => roles.organisation)
+  roles: Roles;
 }

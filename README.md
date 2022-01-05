@@ -89,9 +89,32 @@ appmodule import typeorm **_Atlast import all modules here_**
 
 **_ Organisation module _**
 Create organisation -> dto files,entities
+specify relationship
 
 **_ Patient module _**
-Create patient -> nest g resource ->patient -> RestApi -> Y
-Create entity class
+Create patient -> nest g resource patient -> RestApi -> Y
+Create entity class, establish relationship
 module -> import typeorm entityclass
 service -> DI in constructor
+specify relation in module
+
+*** Hospital ***
+nest g resource hospital -> RestApi -> Y
+hospital DTO, entity, setup relationship
+in organisation entity setup relationship
+
+*** Doctor ***
+nest -g resource doctor -> RestApi -> Y
+establish relationship check entity files
+
+*** User ***
+nest g resource user -> RestApi -> Y
+establish relationship check entity files
+
+*** Roles ***
+nest g resource roles -> RestApi -> Y
+establish relationship check entity files
+
+*** User roles ***
+nest g resource UserRoles -> RestApi -> Y
+establish relationship check entity files

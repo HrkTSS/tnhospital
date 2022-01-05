@@ -4,7 +4,7 @@ module.exports = {
   port: 5432,
   username: 'Dev',
   password: '1234',
-  database: 'tn-hos',
+  database: 'tnhos',
   entities: ['dist/**/*.entity.js'],
   logging: true,
 };

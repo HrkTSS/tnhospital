@@ -8,6 +8,7 @@
 
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Organisation } from 'src/organisation/entities/organisation.entity';
 import { Connection, Repository } from 'typeorm';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
@@ -17,6 +18,7 @@ import { Patient } from './entities/patient.entity';
 export class PatientService {
   constructor(
     @InjectRepository(Patient) private patientRepos: Repository<Patient>,
+    @InjectRepository(Organisation) private orgRepos:Repository<Organisation>,
   ) {}
 
   async create(createPatientDto: CreatePatientDto) {
@@ -33,6 +35,11 @@ export class PatientService {
     }
 
     const newUser = this.patientRepos.create(createPatientDto);
+    const org = new Organisation()
+    org.name = "hrk"
+    await this.orgRepos.save(org)
+    newUser.organisations = org
+
     return this.patientRepos.save(newUser);
   }
 
@@ -44,19 +51,13 @@ export class PatientService {
     return `This action returns a #${id} patient`;
   }
 
-  // findByPhone(phoneNo: string) {
-  //   return this.patientRepos.find({
-  //     relations: ['organisation'],
-  //     where: { phone: phoneNo },
-  //   });
-  // }
-
-  async findByPhone(phoneNo: string) {
-    return await this.patientRepos
-      .createQueryBuilder('patients')
-      .leftJoinAndSelect('patients.organisation', 'organisation.id')
-      .getMany();
+  findByPhone(phoneNo: string) {
+    return this.patientRepos.find({
+      relations: ['organisations'],
+      where: { phone: phoneNo },
+    });
   }
+
   update(id: number, updatePatientDto: UpdatePatientDto) {
     return `This action updates a #${id} patient`;
   }
